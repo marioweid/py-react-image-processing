@@ -1,27 +1,28 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Navigation from "./Navigation";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom"
+import HomePage from "./containers/HomePage";
+import MorphingPage from "./containers/MorphingPage";
 
 function App() {
-    const [data, setData] = useState("");
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-
-                <h2>{data}</h2>
-                <button onClick={call_backend}>Click Me!</button>
-            </header>
+            <header/>
+            <Navigation></Navigation>
+            <Router>
+                <Switch>
+                    <Route exact path={"/"} component={HomePage}/>
+                    <Route path="/morphing" component={MorphingPage}/>
+                </Switch>
+            </Router>
+            <footer/>
         </div>
     );
-
-    function call_backend() {
-        // @ts-ignore
-        fetch(process.env.REACT_APP_API_URL, {mode: 'cors'})
-            .then(response => response.json())
-            .then(data => setData(data.message))
-            .catch(e => console.log(e));
-    }
 }
 
 
